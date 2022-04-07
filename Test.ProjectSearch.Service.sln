@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2BF77C80-DC94-4075-8931-91C2781F192B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1D01C65-CCDF-4CA9-BC4B-12528033FBCB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Models", "src\Test.ProjectSearch.Models\Test.ProjectSearch.Models.csproj", "{7F2441B1-295A-4CA4-9300-9AA21487BAE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Service.Tests", "src\Test.ProjectSearch.Service.Tests\Test.ProjectSearch.Service.Tests.csproj", "{4524B3F4-B0B4-4698-87D5-601D45E5A67D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F2441B1-295A-4CA4-9300-9AA21487BAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2441B1-295A-4CA4-9300-9AA21487BAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2441B1-295A-4CA4-9300-9AA21487BAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2441B1-295A-4CA4-9300-9AA21487BAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7F2441B1-295A-4CA4-9300-9AA21487BAE5} = {2BF77C80-DC94-4075-8931-91C2781F192B}
+		{4524B3F4-B0B4-4698-87D5-601D45E5A67D} = {2BF77C80-DC94-4075-8931-91C2781F192B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86FCC22A-B059-47F0-8D9E-21F6BF7733FF}
+	EndGlobalSection
+EndGlobal
