@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Models", "src\Test.ProjectSearch.Models\Test.ProjectSearch.Models.csproj", "{7F2441B1-295A-4CA4-9300-9AA21487BAE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.ProjectSearch.Models", "src\Test.ProjectSearch.Models\Test.ProjectSearch.Models.csproj", "{7F2441B1-295A-4CA4-9300-9AA21487BAE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Service.Tests", "src\Test.ProjectSearch.Service.Tests\Test.ProjectSearch.Service.Tests.csproj", "{4524B3F4-B0B4-4698-87D5-601D45E5A67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.ProjectSearch.Service.Tests", "src\Test.ProjectSearch.Service.Tests\Test.ProjectSearch.Service.Tests.csproj", "{4524B3F4-B0B4-4698-87D5-601D45E5A67D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Service.Api", "src\Test.ProjectSearch.Service.Api\Test.ProjectSearch.Service.Api.csproj", "{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4524B3F4-B0B4-4698-87D5-601D45E5A67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
