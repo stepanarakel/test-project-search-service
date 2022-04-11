@@ -1,5 +1,7 @@
 ﻿using NodaTime;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.Extensions.Primitives;
+using NpgsqlTypes;
 
 /// <summary>
 /// Модель запроса.
@@ -25,5 +27,5 @@ public class Request
     /// <summary>
     /// Время запроса.
     /// </summary>
-    public Instant ReauestInstant { get; set; } = new();
+    public Instant RequestInstant { get; set; } = SystemClock.Instance.GetCurrentInstant();
 }
