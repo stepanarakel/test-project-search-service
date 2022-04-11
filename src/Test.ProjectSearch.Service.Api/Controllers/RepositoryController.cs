@@ -1,47 +1,108 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Test.ProjectSearch.Models.Api;
 
 /// <summary>
 /// Контроллер проектов.
 /// </summary>
-[Route("[area]/projects")]
+[Route("api/find")]
+//[Route("[area]/repository")]
 [ApiController]
 public class RepositoryController : BaseServiceController
 {
+    readonly RepositoryDbContext _context;
+    readonly IMapper _mapper;
 
+    /// <summary>
+    /// Инициализировать новый экземпляр <see cref="RepositoryController"/>.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    public RepositoryController(
+        RepositoryDbContext context,
+        IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    /// <summary>
+    /// Получить историю запросов.
+    /// </summary>
+    /// <returns>Коллекция <see cref="RepositoryViewModel"/>.</returns>
     [HttpGet]
-    public ActionResult<IEnumerable<object>> GetAll()
+    public async Task<ActionResult<IEnumerable<RepositoryViewModel>>> GetAll()
     {
-        return new[] { "value1", "value2" };
+        var result = (await _context.Requests
+                .AsNoTracking()
+                .Select(x => x.Result)
+                .ToListAsync())
+            .SelectMany(x => x.Items);
+        return Ok(_mapper.Map<IEnumerable<RepositoryViewModel>>(result));
     }
 
-
-    [HttpGet("{id}")]
-    public ActionResult<object> GetById(int id)
-    {
-        return "value";
-    }
-
-    [HttpPost("filter")]
-    public ActionResult<IEnumerable<object>> Filter([FromBody] object value)
-    {
-        return Ok(new[] { 1, 0 });
-    }
-
-
+    /// <summary>
+    /// Получить репозитории по фильтру.
+    /// </summary>
+    /// <param name="value">Фильтр.</param>
+    /// <returns>Коллекция <see cref="RepositoryViewModel"/>.</returns>
     [HttpPost]
-    public void Post([FromBody] string value)
+    //[HttpPost("filter")]
+    public async Task<ActionResult<IEnumerable<RepositoryViewModel>>> Filter([FromBody] RepositoryFilterViewModel value)
     {
+        if (!value.AllowEmpty && string.IsNullOrEmpty(value.TextRequest))
+            return BadRequest(new ErrorResponseViewModel("Repository name must contain at least one character."));
+
+        IEnumerable<RepositoryViewModel> result;
+
+        if (!value.AllowEmpty && !await _context.Requests.AnyAsync())
+            return NotFound(new ErrorResponseViewModel("No data."));
+
+        var allRequests = await _context.Requests
+            .AsNoTracking()
+            .ToListAsync();
+
+        var queryResult = allRequests
+            .Where(x => x.RequestText.ToLower().Contains(value.TextRequest.ToLower()))
+            .SelectMany(x => x.Result.Items)
+            .ToList();
+
+        if (queryResult.Count > 0)
+        {
+            result = _mapper.Map<IEnumerable<RepositoryViewModel>>(queryResult);
+            return Ok(result);
+        }
+
+        var repositoryResult = allRequests
+            .SelectMany(x => x.Result.Items)
+            .Where(x => x.Name.ToLower().Contains(value.TextRequest.ToLower()))
+            .ToList();
+
+        if (repositoryResult.Count > 0)
+        {
+            result = _mapper.Map<IEnumerable<RepositoryViewModel>>(repositoryResult);
+            return Ok(result);
+        }
+
+        if (value.AllowEmpty)
+            return Array.Empty<RepositoryViewModel>();
+
+        return NotFound(new ErrorResponseViewModel("Nothing was found for your query."));
     }
 
-
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    /// <summary>
+    /// Удалить запрос по идентификатору.
+    /// </summary>
+    /// <param name="id">Идентификатор запроса.</param>
+    //[HttpDelete("delete/{id}")]
+    public async Task<ActionResult> Delete(long id)
     {
-    }
+        var request = await _context.Requests.FirstOrDefaultAsync(x => x.Id == id);
+        if (request == null)
+            return NotFound(new ErrorResponseViewModel($"Request with ID {id} not found."));
 
-
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        _context.Requests.Remove(request);
+        return NoContent();
     }
 }
