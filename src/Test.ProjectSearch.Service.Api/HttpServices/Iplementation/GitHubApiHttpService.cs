@@ -11,6 +11,7 @@ public class GitHubApiHttpService : SimpleHttpService, IGitHubApiHttpService
     /// <summary>
     /// Инициализировать новый экземпляр класса <see cref="GitHubApiHttpService"/>.
     /// </summary>
+    /// <param name="options">Опции.</param>
     /// <param name="httpClient">Http клиент.</param>
     /// <param name="loggerFactory">Фабрка логгеров.</param>
     public GitHubApiHttpService(

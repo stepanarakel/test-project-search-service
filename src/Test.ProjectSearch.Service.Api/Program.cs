@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using static AppConstants;
 
 public class Program
@@ -21,11 +22,8 @@ public class Program
 
         var connectionString = builder.Configuration[ConnectionString];
         builder.Services.AddDbContext<RepositoryDbContext>(opt =>
-            opt.UseNpgsql(connectionString, options => options.UseNodaTime())
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors());
+            opt.UseNpgsql(connectionString, options => options.UseNodaTime()));
 
-        /////////
         builder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1",
@@ -34,36 +32,22 @@ public class Program
                     Version = "v1",
                     Title = "Api"
                 });
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAll",
-                corsPolicyBuilder => corsPolicyBuilder
-                    .SetIsOriginAllowed(isOriginAllowed: _ => true)
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-                    .AllowAnyMethod());
-        });
-        /////////
 
         builder.Services.AddControllers();
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
-
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
             app.UseHsts();
         }
-
-        /////////////
         app.UseSwagger();
         app.UseSwaggerUI(options =>
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api"));
-        app.UseCors("AllowAll");
-        /////////////
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
