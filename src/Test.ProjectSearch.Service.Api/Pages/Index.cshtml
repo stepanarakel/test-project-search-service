@@ -1,10 +1,32 @@
 ﻿@page
-@model IndexModel
+@model Test.ProjectSearch.Service.Api.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Search";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form>
+    <input placeholder="repository name" type="text" asp-for="TextRequest" value="@Model.TextRequest" />
+    <input type="submit" value="Find"/>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Error?.Message))
+{
+    <div>
+        <h5>@Model.Error.Message</h5>
+    </div>
+}
+@if (Model.Repositories.Any())
+{
+    <dic>
+        @foreach (var repository in Model.Repositories)
+        {
+            <div class="card" onclick="window.open('@repository.Url', '_blank');">
+                <div class="card-body">
+                    <h5 class="card-title">@repository.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Autor: @repository.Autor</h6>
+                    <p class="card-text">Start: @repository.Stargazers, Watchers: @repository.Watchers</p>
+                </div>
+            </div>
+        }
+    </dic>
+}
