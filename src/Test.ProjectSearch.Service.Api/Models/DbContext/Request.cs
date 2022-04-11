@@ -1,7 +1,5 @@
 ﻿using NodaTime;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Extensions.Primitives;
-using NpgsqlTypes;
 
 /// <summary>
 /// Модель запроса.

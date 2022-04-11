@@ -1,7 +1,7 @@
 ﻿using System.Net;
 
 /// <summary>
-/// Класс представляет собой расширенную версию исключения для обслуживания запросов <see cref="RestHttpClient"/> requests.
+/// Класс представляет собой расширенную версию исключения для обслуживания запросов <see cref="SimpleHttpService"/> requests.
 /// </summary>
 public class ResponseException : Exception
 {

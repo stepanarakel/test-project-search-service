@@ -95,6 +95,7 @@ public class RepositoryController : BaseServiceController
     /// Удалить запрос по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор запроса.</param>
+    [HttpDelete("{id}")]
     //[HttpDelete("delete/{id}")]
     public async Task<ActionResult> Delete(long id)
     {
@@ -103,6 +104,7 @@ public class RepositoryController : BaseServiceController
             return NotFound(new ErrorResponseViewModel($"Request with ID {id} not found."));
 
         _context.Requests.Remove(request);
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 }
