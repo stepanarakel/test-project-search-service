@@ -24,7 +24,7 @@ public class RepositoryRequestViewModel
     public int WatchersCount { get; set; }
 
     /// <summary>
-    /// Ссылка на проект.
+    /// Ссылка на репозиторий.
     /// </summary>
-    public string Url { get; set; }
+    public string HtmlUrl { get; set; }
 }

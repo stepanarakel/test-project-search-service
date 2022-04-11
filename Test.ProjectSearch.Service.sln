@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.ProjectSearch.Models",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.ProjectSearch.Service.Tests", "src\Test.ProjectSearch.Service.Tests\Test.ProjectSearch.Service.Tests.csproj", "{4524B3F4-B0B4-4698-87D5-601D45E5A67D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ProjectSearch.Service.Api", "src\Test.ProjectSearch.Service.Api\Test.ProjectSearch.Service.Api.csproj", "{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.ProjectSearch.Service.Api", "src\Test.ProjectSearch.Service.Api\Test.ProjectSearch.Service.Api.csproj", "{D8AAD094-69E5-45A8-9A0C-351E7F5044AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7F2441B1-295A-4CA4-9300-9AA21487BAE5} = {2BF77C80-DC94-4075-8931-91C2781F192B}
 		{4524B3F4-B0B4-4698-87D5-601D45E5A67D} = {2BF77C80-DC94-4075-8931-91C2781F192B}
+		{D8AAD094-69E5-45A8-9A0C-351E7F5044AB} = {2BF77C80-DC94-4075-8931-91C2781F192B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86FCC22A-B059-47F0-8D9E-21F6BF7733FF}

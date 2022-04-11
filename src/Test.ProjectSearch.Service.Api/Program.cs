@@ -1,76 +1,74 @@
 using Microsoft.EntityFrameworkCore;
 using static AppConstants;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddLogging();
-builder.Services.AddHttpClient<IGitHubApiHttpService, GitHubApiHttpService>();
-
-builder.Host.ConfigureGitHubHttpService(option =>
+public class Program
 {
-    var headerList = new List<HttpHeader>();
-    builder.Configuration.GetSection(GitHubHttpHeaderOptions.Position).Bind(headerList);
-    foreach (var header in headerList)
-        option.AddForwardHeader(header.Title, header.Value);
-});
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration[ConnectionString];
-builder.Services.AddDbContext<RepositoryDbContext>(opt =>
-    opt.UseNpgsql(connectionString, options => options.UseNodaTime())
-        .EnableSensitiveDataLogging()
-        .EnableDetailedErrors());
+        builder.Services.AddLogging();
+        builder.Services.AddAutoMapper(typeof(Program));
+        builder.Services.AddHttpClient<IGitHubApiHttpService, GitHubApiHttpService>();
 
-/////////
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1",
-        new Microsoft.OpenApi.Models.OpenApiInfo
+        builder.Host.ConfigureGitHubHttpService(option =>
         {
-            Version = "v1",
-            Title = "Api"
+            var headerList = new List<HttpHeader>();
+            builder.Configuration.GetSection(GitHubHttpHeaderOptions.Position).Bind(headerList);
+            foreach (var header in headerList)
+                option.AddForwardHeader(header.Title, header.Value);
         });
-});
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        corsPolicyBuilder => corsPolicyBuilder
-            .SetIsOriginAllowed(isOriginAllowed: _ => true)
-            .AllowAnyHeader()
-            .AllowCredentials()
-            .AllowAnyMethod());
-});
-/////////
 
-builder.Services.AddControllers();
-builder.Services.AddRazorPages();
+        var connectionString = builder.Configuration[ConnectionString];
+        builder.Services.AddDbContext<RepositoryDbContext>(opt =>
+            opt.UseNpgsql(connectionString, options => options.UseNodaTime())
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors());
 
+        /////////
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1",
+                new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Api"
+                });
+        });
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                corsPolicyBuilder => corsPolicyBuilder
+                    .SetIsOriginAllowed(isOriginAllowed: _ => true)
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .AllowAnyMethod());
+        });
+        /////////
 
+        builder.Services.AddControllers();
+        builder.Services.AddRazorPages();
 
-var app = builder.Build();
+        var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
+
+        /////////////
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api"));
+        app.UseCors("AllowAll");
+        /////////////
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseEndpoints(e => e.MapControllers());
+        app.MapRazorPages();
+        app.Run();
+    }
 }
-
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Api"));
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-/////////////
-app.UseCors("AllowAll");
-/////////////
-//app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.UseEndpoints(e => e.MapControllers());
-
-app.Run();
