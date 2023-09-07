@@ -1,0 +1,19 @@
+﻿@page
+@model Test.ProjectSearch.Service.Api.Pages.HistoryModel
+
+@{
+    ViewData["Title"] = "History";
+}
+
+<dic>
+    @foreach (var repository in Model.Requests.SelectMany(x => x.Result.Items))
+    {
+        <div class="card" onclick="window.open('@repository.Url', '_blank');">
+            <div class="card-body">
+                <h5 class="card-title">@repository.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Autor: @repository.Owner.Login</h6>
+                <p class="card-text">Start: @repository.StargazersCount, Watchers: @repository.WatchersCount</p>
+            </div>
+        </div>
+    }
+</dic>
